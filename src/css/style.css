@@ -1,3 +1,27 @@
 body {
   background-color: #DFDFDF;
 }
+
+.square {
+  display: inline-block;
+  border: 1px solid grey;
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+
+.square .piece {
+  vertical-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+div .square:nth-of-type(odd) {
+  background-color: white;
+}
+
+div .square:nth-of-type(even) {
+  background-color: tan;
+}

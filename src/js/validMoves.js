@@ -5,8 +5,15 @@ function validMoves(board, myColor) {
   let validMoves = new Set();
 
   let addToValid = (y1, x1, y2, x2) => {
-    // TODO: don't allow moving into check
+    // don't allow moving onto one of player's own pieces
     if (board[y2][x2] && board[y2][x2][0] === myColor) return;
+
+    // provisionally make move, then see if player is in check
+    let newBoard = Array(8).fill(undefined).map((_, i) => board[i].slice(0));
+    newBoard[y2][x2] = board[y1][x1];
+    newBoard[y1][x1] = '';
+    if (amIInCheck(newBoard, myColor)) return;
+
     validMoves.add(`${y1},${x1}->${y2},${x2}`);
   };
 

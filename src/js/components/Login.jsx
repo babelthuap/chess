@@ -29,6 +29,8 @@ class Login extends React.Component {
     return (
       <div className="login">
         <div>
+          <h1>Welcome!</h1>
+          <p>&bull; &bull; &bull;</p>
           <h2>Please choose a username:</h2>
           <input type="text"
                  placeholder='e.g. "paul"'

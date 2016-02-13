@@ -35,13 +35,19 @@ class App extends React.Component {
   render() {
     console.log('this.state.username:', this.state.username)
 
-    let navbar = this.state.username ? <Navbar logout={this._logout.bind(this)} /> : [];
-    let main = this.state.username ? <Board myColor={this.state.myColor} />
-                                   : <Login chooseName={this._chooseName.bind(this)} />;
+    let navbar   = []
+      , main     = <Login chooseName={this._chooseName.bind(this)} />
+      , username = this.state.username;
+
+    if (username) {
+      navbar = <Navbar logout={this._logout.bind(this)} />;
+      main   = <Board myColor={this.state.myColor} />;
+    }
+
     return (
       <div>
         {navbar}
-        <h1>Play Chess Like Paul!</h1>
+        <h1 id="title">Play Chess Like Paul</h1>
         <hr/>
         {main}
       </div>

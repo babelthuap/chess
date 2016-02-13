@@ -4,13 +4,14 @@ body {
   text-align: center;
 }
 
-h1 {
+#title {
   font-style: italic;
 }
 
 .login {
   margin: auto;
   border-radius: 15px;
+  color: #333;
   background-color: tan;
   box-shadow: 10px 10px 5px #888888;
   border: 20px solid #589442;

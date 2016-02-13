@@ -1,12 +1,30 @@
 body {
   background-color: #DFDFDF;
+  text-align: center;
+}
+
+.navbar {
+  position: fixed;
+  padding: 10px;
+  top: 10px;
+  right: 10px;
+  border: 1px solid #000;
+}
+
+.board {
+  max-width: 616px;
+  background-color: grey;
+  border: 20px solid #589442;
+  border-radius: 15px;
+  margin: auto;
 }
 
 .square {
+  margin-bottom: -4px;
   display: inline-block;
   border: 1px solid grey;
-  width: 100px;
-  height: 100px;
+  width: 75px;
+  height: 75px;
   position: relative;
 }
 
@@ -18,10 +36,10 @@ body {
   transform: translate(-50%, -50%);
 }
 
-div .square:nth-of-type(odd) {
+.white {
   background-color: white;
 }
 
-div .square:nth-of-type(even) {
+.tan {
   background-color: tan;
 }

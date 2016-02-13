@@ -16,6 +16,7 @@ class App extends React.Component {
     return (
       <div>
         <Navbar />
+        <h1>Play Chess Like Paul!</h1>
         <Board />
       </div>
     )

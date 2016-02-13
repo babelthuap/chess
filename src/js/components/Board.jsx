@@ -15,9 +15,6 @@ function gameStart() {
   let board = emptyBoard();
   board[0] = backRowPieces.map(piece => 'b' + piece);
   board[1] = Array(8).fill('bp');
-
-  board[3][4] = 'wk';
-
   board[6] = Array(8).fill('wp');
   board[7] = backRowPieces.map(piece => 'w' + piece);
   return board;

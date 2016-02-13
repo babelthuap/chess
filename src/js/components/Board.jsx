@@ -16,12 +16,17 @@ class Board extends React.Component {
     }
   }
 
+  makeMove(move) {
+    this.props.makeMove(move);
+  }
+
   render() {
     let board = this.state.positions.map((row, i) => {
       return row.map((piece, j) => {
         return <Square key={i + '' + j}
                        color={(i + j) % 2 === 0 ? "white" : "tan"}
                        coordinates={i + '' + j}
+                       click={this.makeMove.bind(this)}
                        piece={piece} />
       });
     });

@@ -9,15 +9,21 @@ class App extends React.Component {
     super(props);
     this.displayName = 'App';
     this.state = {
-      user: {}
+      user: {},
+      move: ''
     }
   }
+
+  makeMove(move) {
+    this.setState({ move: move });
+  }
+
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar move={this.state.move} />
         <h1>Play Chess Like Paul!</h1>
-        <Board />
+        <Board makeMove={this.makeMove.bind(this)} />
       </div>
     )
   }

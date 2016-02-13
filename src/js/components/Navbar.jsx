@@ -8,7 +8,9 @@ class Navbar extends React.Component {
   render() {
     return (
       <div className="navbar">
-        Navbar
+        <h3>position</h3>
+        <hr/>
+        {this.props.move}
       </div>
     )
   }

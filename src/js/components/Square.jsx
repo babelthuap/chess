@@ -7,7 +7,7 @@ class Square extends React.Component {
   }
 
   handleClick() {
-    console.log('position', this.props.coordinates)
+    this.props.click(this.props.coordinates);
   }
 
   render() {

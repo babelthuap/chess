@@ -1,5 +1,6 @@
 import React from 'react';
 import Square from './Square.jsx';
+import validMoves from '../validMoves.js';
 
 const backRowPieces = ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'];
 
@@ -14,28 +15,12 @@ function gameStart() {
   let board = emptyBoard();
   board[0] = backRowPieces.map(piece => 'b' + piece);
   board[1] = Array(8).fill('bp');
+
+  board[3][4] = 'wk';
+
   board[6] = Array(8).fill('wp');
   board[7] = backRowPieces.map(piece => 'w' + piece);
   return board;
-}
-
-// generate set of all valid moves
-function validMoves(board, myColor) {
-  let validMoves = new Set();
-
-  for (let y = 0; y < 8; y++) {
-    for (let x = 0; x < 8; x++) {
-      if (board[y][x][0] === myColor) {
-
-        validMoves.add(`${y},${x}->${y - 1},${x}`)
-        validMoves.add(`${y},${x}->${y - 2},${x}`)
-
-        console.log(board[y][x]);
-      }
-    }
-  }
-
-  return validMoves;
 }
 
 

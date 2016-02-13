@@ -57,7 +57,7 @@ h1 {
 }
 
 .selected {
-  opacity: 0.9;
+  opacity: 0.2;
   border: 1px solid yellow;
 }
 

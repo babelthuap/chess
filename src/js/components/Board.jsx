@@ -19,6 +19,24 @@ function gameStart() {
   return board;
 }
 
+// generate set of all valid moves
+function validMoves(board, myColor) {
+  let validMoves = new Set();
+
+  for (let y = 0; y < 8; y++) {
+    for (let x = 0; x < 8; x++) {
+      if (board[y][x][0] === myColor) {
+
+        validMoves.add(`${y},${x}->${y - 1},${x}`)
+        validMoves.add(`${y},${x}->${y - 2},${x}`)
+
+        console.log(board[y][x]);
+      }
+    }
+  }
+
+  return validMoves;
+}
 
 
 class Board extends React.Component {
@@ -27,6 +45,7 @@ class Board extends React.Component {
     this.displayName = 'Board';
     this.state = {
       board: gameStart(),
+      validMoves: validMoves(gameStart(), this.props.myColor),
       selected: [],
     }
   }
@@ -41,14 +60,18 @@ class Board extends React.Component {
     } else if (this.state.selected.length) {
       // move to empty square if legal
       let selected = this.state.selected;
-      let selectedPiece = this.state.board[selected[0]][selected[1]]
 
+      let move = `${selected[0]},${selected[1]}->${y},${x}`;
+      if (!this.state.validMoves.has(move)) return;
+
+      let selectedPiece = this.state.board[selected[0]][selected[1]];
       let newBoard = this.state.board;
       newBoard[selected[0]][selected[1]] = '';
       newBoard[y][x] = selectedPiece;
 
       this.setState({
         board: newBoard,
+        validMoves: validMoves(newBoard, this.props.myColor),
         selected: [],
       });
     }
@@ -57,12 +80,17 @@ class Board extends React.Component {
   render() {
     let selected = this.state.selected;
 
-    let board = this.state.board.map((row, i) => {
-      return row.map((piece, j) => {
-        return <Square key={i + '' + j}
-                       bgColor={(i + j) % 2 === 0 ? "white" : "tan"}
-                       selected={i === selected[0] && j === selected[1]}
-                       click={this.clickSquare.bind(this, i, j)}
+    let board = this.state.board.map((row, y) => {
+      return row.map((piece, x) => {
+
+        let move = `${selected[0]},${selected[1]}->${y},${x}`;
+        let highlight = (y === selected[0] && x === selected[1]) ||
+                        this.state.validMoves.has(move);
+
+        return <Square key={y + '' + x}
+                       bgColor={(y + x) % 2 === 0 ? "white" : "tan"}
+                       selected={highlight}
+                       click={this.clickSquare.bind(this, y, x)}
                        piece={piece} />
       });
     });

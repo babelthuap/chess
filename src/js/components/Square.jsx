@@ -11,10 +11,13 @@ class Square extends React.Component {
   }
 
   render() {
-    // console.log(this.props.coordinates)
+    let piece = this.props.piece;
+    let img = piece ? <img src={`pieces/${piece}.svg`} width="64" alt={piece}/> : [];
     return (
       <div className={`${this.props.color} square`} onClick={this.handleClick.bind(this)}>
-        <span className="piece">{this.props.piece}</span>
+        <span className="piece">
+          {img}
+        </span>
       </div>
     );
   }

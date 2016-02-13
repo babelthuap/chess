@@ -19,7 +19,7 @@ h1 {
 
 .board {
   cursor: pointer;
-  max-width: 616px;
+  max-width: 550px;
   background-color: grey;
   border: 20px solid #589442;
   box-shadow: 10px 10px 5px #888888;
@@ -31,8 +31,8 @@ h1 {
   margin-bottom: -4px;
   display: inline-block;
   border: 1px solid grey;
-  width: 75px;
-  height: 75px;
+  width: 66px;
+  height: 66px;
   position: relative;
 }
 

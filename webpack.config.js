@@ -1,16 +1,19 @@
 var webpack = require("webpack");
 var css = require("css-loader");
 
+var minify = [];
+if (process.env.DEVELOPMENT !== 'true') {
+  // minify in production
+  minify = [ new webpack.optimize.UglifyJsPlugin({minimize: true}) ];
+}
+
 module.exports = {
   entry:"./src/js/app.jsx",
   output:{
     path: __dirname,
     filename: "./public/bundle.js"
   },
-  plugins: [
-    // uncomment for minification
-    // new webpack.optimize.UglifyJsPlugin({minimize: true})
-  ],
+  plugins: minify,
   module:{
     loaders:[{
       test: /\.jsx?$/,

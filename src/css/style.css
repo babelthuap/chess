@@ -3,6 +3,10 @@ body {
   text-align: center;
 }
 
+h1 {
+  font-family: Papyrus, serif;
+}
+
 .navbar {
   position: fixed;
   padding: 10px;
@@ -12,9 +16,11 @@ body {
 }
 
 .board {
+  cursor: pointer;
   max-width: 616px;
   background-color: grey;
   border: 20px solid #589442;
+  box-shadow: 10px 10px 5px #888888;
   border-radius: 15px;
   margin: auto;
 }

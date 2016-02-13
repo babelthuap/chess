@@ -1,20 +1,59 @@
 body {
   background-color: #DFDFDF;
+  font-family: Optima, sans-serif;
   text-align: center;
 }
 
 h1 {
-  font-family: Papyrus, serif;
+  font-style: italic;
+}
+
+.login {
+  margin: auto;
+  border-radius: 15px;
+  background-color: tan;
+  box-shadow: 10px 10px 5px #888888;
+  border: 20px solid #589442;
+  width: 475px;
+  height: 250px;
+  position: relative;
+}
+
+.login > div {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login input {
+  font-family: Optima, sans-serif;
+  font-size: 16px;
+  padding: 4px;
+  margin: 0.5em;
+}
+
+.button {
+  display: inline-block;
+  font-size: 18px;
+  margin: 0.5em;
+  padding: 10px 16px 10px 16px;
+  box-shadow: 3px 4px 0px rgba(0, 0, 0, 0.42);
+  border-radius: 3px;
+  cursor: pointer;
+  background-color: #F3F3F3;
+}
+
+.button:hover {
+  background-color: white;
+  box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.42);
 }
 
 .navbar {
   position: fixed;
-  padding: 10px;
-  top: 10px;
-  right: 10px;
-  border-radius: 5px;
-  color: #FCFCFC;
-  background: #548336;
+  top: 0px;
+  right: 0px;
 }
 
 .board {
@@ -41,7 +80,6 @@ h1 {
 }
 
 .square .piece {
-  vertical-align: center;
   position: absolute;
   top: 50%;
   left: 50%;

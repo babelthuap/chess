@@ -8,8 +8,7 @@ class Navbar extends React.Component {
   render() {
     return (
       <div className="navbar">
-        <h3>White's turn</h3>
-        <hr/>
+        <div className="button" onClick={this.props.logout}>Log out</div>
       </div>
     )
   }

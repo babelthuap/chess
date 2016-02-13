@@ -37,7 +37,7 @@ class Board extends React.Component {
     }
   }
 
-  clickSquare(y, x) {
+  _clickSquare(y, x) {
     let piece = this.state.board[y][x];
 
     if (piece && piece[0] === this.props.myColor) {
@@ -77,7 +77,7 @@ class Board extends React.Component {
         return <Square key={y + '' + x}
                        bgColor={(y + x) % 2 === 0 ? "white" : "tan"}
                        selected={highlight}
-                       click={this.clickSquare.bind(this, y, x)}
+                       click={this._clickSquare.bind(this, y, x)}
                        piece={piece} />
       });
     });

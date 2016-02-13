@@ -26,24 +26,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 // routes
 app.use('/', require('./routes/index'));
 
-
 // start socket io
-// require('./game')(app);
-
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+io.on('connection', require('./game'));
 
 server.listen(3000);
-
-console.log('waiting for connections');
-
-io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
-
 
 // catch error
 app.use(function(req, res, next) {

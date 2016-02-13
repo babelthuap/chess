@@ -1,22 +1,14 @@
-function game(app) {
-  'use strict';
+'use strict';
 
-  const http = require('http')
-      , server = http.Server(app)
-      , io = require('socket.io')(server);
+let games = {};
 
-
-  console.log('in game function, waiting for connections');
-
-
-  io.on('connection', (socket) => {
-    console.log('connected');
-
-    socket.on('message', (data) => {
-      console.log('GOT A MESSAGE:', data);
-    });
-
+function game(socket) {
+  
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function(data) {
+    console.log(data);
   });
+  
 }
 
 module.exports = game;

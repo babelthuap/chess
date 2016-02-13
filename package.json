@@ -7,7 +7,7 @@
   "private": false,
   "scripts": {
     "setup": "npm i",
-    "start": "node ./bin/www",
+    "start": "node server.js",
     "postinstall": "./node_modules/webpack/bin/webpack.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

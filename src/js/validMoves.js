@@ -1,3 +1,5 @@
+import amIInCheck from './amIInCheck.js';
+
 // generate the set of all valid moves for a given board state
 function validMoves(board, myColor) {
   let validMoves = new Set();
@@ -95,6 +97,7 @@ function validMoves(board, myColor) {
     },
     k(y, x) { // king
       addDeltas(y, x, [[0, 1], [1, 1], [1, 0], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]])
+      // TODO: castling
     },
   };
 

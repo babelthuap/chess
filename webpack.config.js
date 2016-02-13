@@ -9,7 +9,7 @@ module.exports = {
   },
   plugins: [
     // uncomment for minification
-    new webpack.optimize.UglifyJsPlugin({minimize: true})
+    // new webpack.optimize.UglifyJsPlugin({minimize: true})
   ],
   module:{
     loaders:[{

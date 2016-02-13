@@ -20,6 +20,11 @@ function gameStart() {
   return board;
 }
 
+// rotate board 180 degrees
+function rotate(board) {
+  return board.map(row => row.reverse()).reverse();
+}
+
 
 class Board extends React.Component {
   constructor(props) {

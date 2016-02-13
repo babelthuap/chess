@@ -31,7 +31,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 io.on('connection', require('./game'));
 
-server.listen(3000);
+server.listen(process.env.PORT || 3000);
 
 // catch error
 app.use(function(req, res, next) {

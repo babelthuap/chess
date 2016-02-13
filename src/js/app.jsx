@@ -4,6 +4,8 @@ import Navbar from './components/Navbar.jsx';
 import Board from './components/Board.jsx';
 import '../css/style.css';
 
+let socket = io.connect('/');
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -12,6 +14,13 @@ class App extends React.Component {
       user: {},
       myColor: 'w',
     }
+  }
+
+  componentWillMount() {
+    socket.on('news', function(data) {
+      console.log(data);
+      socket.emit('my other event', { my: 'data' });
+    });
   }
 
   makeMove(move) {

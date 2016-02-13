@@ -19,26 +19,50 @@ function gameStart() {
   return board;
 }
 
+
+
 class Board extends React.Component {
   constructor(props) {
     super(props);
     this.displayName = 'Board';
     this.state = {
-      positions: gameStart()
+      board: gameStart(),
+      selected: [],
     }
   }
 
-  makeMove(move) {
-    this.props.makeMove(move);
+  clickSquare(y, x) {
+    let piece = this.state.board[y][x];
+
+    if (piece && piece[0] === this.props.myColor) {
+      // if the user clicks one of their own pieces, select it
+      this.setState({ selected: [y, x] });
+
+    } else if (this.state.selected.length) {
+      // move to empty square if legal
+      let selected = this.state.selected;
+      let selectedPiece = this.state.board[selected[0]][selected[1]]
+
+      let newBoard = this.state.board;
+      newBoard[selected[0]][selected[1]] = '';
+      newBoard[y][x] = selectedPiece;
+
+      this.setState({
+        board: newBoard,
+        selected: [],
+      });
+    }
   }
 
   render() {
-    let board = this.state.positions.map((row, i) => {
+    let selected = this.state.selected;
+
+    let board = this.state.board.map((row, i) => {
       return row.map((piece, j) => {
         return <Square key={i + '' + j}
-                       color={(i + j) % 2 === 0 ? "white" : "tan"}
-                       coordinates={i + '' + j}
-                       click={this.makeMove.bind(this)}
+                       bgColor={(i + j) % 2 === 0 ? "white" : "tan"}
+                       selected={i === selected[0] && j === selected[1]}
+                       click={this.clickSquare.bind(this, i, j)}
                        piece={piece} />
       });
     });

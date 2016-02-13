@@ -10,7 +10,7 @@ class App extends React.Component {
     this.displayName = 'App';
     this.state = {
       user: {},
-      move: ''
+      myColor: 'w',
     }
   }
 
@@ -23,7 +23,7 @@ class App extends React.Component {
       <div>
         <Navbar move={this.state.move} />
         <h1>Play Chess Like Paul!</h1>
-        <Board makeMove={this.makeMove.bind(this)} />
+        <Board myColor={this.state.myColor} />
       </div>
     )
   }

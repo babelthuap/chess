@@ -5,6 +5,7 @@ const express      = require('express')
     , favicon      = require('serve-favicon')
     , logger       = require('morgan')
     , cookieParser = require('cookie-parser')
+    , compression  = require('compression')
     , bodyParser   = require('body-parser');
 
 let app = express();
@@ -14,6 +15,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // favicon & middleware
+app.use(compression());
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());

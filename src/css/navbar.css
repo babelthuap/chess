@@ -1,0 +1,52 @@
+.logout {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+}
+
+.playerInfo {
+  position: fixed;
+  top: 100px;
+  right: 0px;
+  color: white;
+  background-color: #589442;
+  margin: 0.5em;
+  padding-bottom: 1em;
+  border: 6px solid #888888;
+}
+
+.playerInfo > * {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.playerInfo h3 {
+  margin-bottom: 4px;
+}
+
+.playerInfo .divider {
+  background-color: tan;
+  height: 6px;
+  width: 100%;
+  margin: 1em 0em 1em 0em;
+}
+
+.onlineUsers {
+  position: fixed;
+  top: 100px;
+  left: 0px;
+  color: white;
+  background-color: #589442;
+  padding: 0.5em;
+  padding-bottom: 1em;
+  margin: 0.5em;
+  border: 6px solid #888888;
+}
+
+.onlineUsers > p:first-child {
+  font-weight: bold;
+}
+
+.onlineUsers em {
+  display: block;
+}

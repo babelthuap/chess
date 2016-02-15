@@ -51,39 +51,6 @@ body {
   box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.42);
 }
 
-.logout {
-  position: fixed;
-  top: 0px;
-  right: 0px;
-}
-
-.playerInfo {
-  position: fixed;
-  top: 100px;
-  right: 0px;
-  color: white;
-  background-color: #589442;
-  margin: 0.5em;
-  padding-bottom: 1em;
-  border: 6px solid #888888;
-}
-
-.playerInfo > * {
-  margin-left: 1em;
-  margin-right: 1em;
-}
-
-.playerInfo h3 {
-  margin-bottom: 4px;
-}
-
-.playerInfo .divider {
-  background-color: tan;
-  height: 6px;
-  width: 100%;
-  margin: 1em 0em 1em 0em;
-}
-
 .board {
   cursor: pointer;
   max-width: 550px;

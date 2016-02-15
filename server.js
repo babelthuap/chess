@@ -29,9 +29,24 @@ app.use('/', require('./routes/index'));
 
 
 
+
+// start socket io
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+io.on('connection', clientConnection);
+
+
 // game logic
 let games = {};
-let activeUsers = {};
+let onlineUsers = {};
+
+
+function broadcastUsers() {
+  let usernames = Object.keys(onlineUsers).map(user => {
+    return user.split(' ')[0];
+  });
+  io.emit('onlineUsers', usernames);
+}
 
 
 // handle a client connection
@@ -40,33 +55,30 @@ function clientConnection(socket) {
 
   socket.on('login', (username) => {
     do {
-      userId = username + Math.floor(Math.random() * 1000000);
-    } while (activeUsers.hasOwnProperty(userId));
+      userId = username + ' ' + Math.floor(Math.random() * 1000000);
+    } while (onlineUsers.hasOwnProperty(userId));
     console.log(userId + ' connected');
-    activeUsers[userId] = 'waiting';
-    console.log('activeUsers:', activeUsers);
+    onlineUsers[userId] = 'waiting';
+    broadcastUsers();
+    console.log('onlineUsers:', onlineUsers);
   });
 
   socket.on('logout', () => {
-    delete activeUsers[userId];
-    console.log('activeUsers:', activeUsers);
+    delete onlineUsers[userId];
+    broadcastUsers();
+    console.log('onlineUsers:', onlineUsers);
   });
 
   socket.on('disconnect', () => {
-    delete activeUsers[userId];
+    delete onlineUsers[userId];
+    broadcastUsers();
     console.log(userId + ' disconnected');
-    console.log('activeUsers:', activeUsers);
+    console.log('onlineUsers:', onlineUsers);
   });
 }
 
 
 
-
-
-// start socket io
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
-io.on('connection', clientConnection);
 
 server.listen(process.env.PORT || 3000);
 

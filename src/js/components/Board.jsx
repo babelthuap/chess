@@ -35,7 +35,7 @@ class Board extends React.Component {
       board: emptyBoard(),
       validMoves: validMoves(gameStart(), this.props.myColor),
       selected: [],
-      waiting: true,
+      waiting: false,
     }
   }
 

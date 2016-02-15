@@ -41,8 +41,12 @@ class Board extends React.Component {
     let piece = this.state.board[y][x];
 
     if (piece && piece[0] === this.props.myColor) {
-      // if the user clicks one of their own pieces, select it
-      this.setState({ selected: [y, x] });
+      // if the user clicks one of their own pieces, toggle select it
+      if (this.state.selected[0] === y && this.state.selected[1] === x) {
+        this.setState({ selected: [] });
+      } else {
+        this.setState({ selected: [y, x] });
+      }
 
     } else if (this.state.selected.length) {
       // move to empty square if legal

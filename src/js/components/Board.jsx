@@ -1,6 +1,7 @@
 import React from 'react';
 import Square from './Square.jsx';
 import validMoves from '../validMoves.js';
+import '../../css/loadingCube.css';
 
 const backRowPieces = ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'];
 
@@ -31,9 +32,10 @@ class Board extends React.Component {
     super(props);
     this.displayName = 'Board';
     this.state = {
-      board: gameStart(),
+      board: emptyBoard(),
       validMoves: validMoves(gameStart(), this.props.myColor),
       selected: [],
+      waiting: true,
     }
   }
 
@@ -86,9 +88,25 @@ class Board extends React.Component {
       });
     });
 
+    let waitingMessage = [];
+    if (this.state.waiting) {
+      waitingMessage = (
+        <h1 id="waitingMessage">
+          Waiting<br/>for<br/>opponent...
+          <div className="cssload-thecube">
+            <div className="cssload-cube cssload-c1"></div>
+            <div className="cssload-cube cssload-c2"></div>
+            <div className="cssload-cube cssload-c4"></div>
+            <div className="cssload-cube cssload-c3"></div>
+          </div>
+        </h1>
+      )
+    }
+
     return (
       <div className="board">
         {board}
+        {waitingMessage}
       </div>
     )
   }

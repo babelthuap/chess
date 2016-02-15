@@ -40,8 +40,8 @@ function clientConnection(socket) {
 
   socket.on('login', (username) => {
     do {
-      userId = username + Date.now().toString().slice(-7);
-    } while (activeUsers[userId]);
+      userId = username + Math.floor(Math.random() * 1000000);
+    } while (activeUsers.hasOwnProperty(userId));
     console.log(userId + ' connected');
     activeUsers[userId] = 'waiting';
     console.log('activeUsers:', activeUsers);

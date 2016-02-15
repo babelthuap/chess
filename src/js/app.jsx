@@ -25,6 +25,7 @@ class App extends React.Component {
 
   _logout() {
     this.setState({ username: '' });
+    socket.emit('logout');
   }
 
   _chooseName(username) {

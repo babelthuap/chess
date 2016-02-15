@@ -31,38 +31,32 @@ app.use('/', require('./routes/index'));
 
 // game logic
 let games = {};
-let halfFullGame = '';
+let activeUsers = {};
 
-function waitForOpponent(cb) {
 
-}
-
-function player(socket) {
+// handle a client connection
+function clientConnection(socket) {
   let userId;
 
   socket.on('login', (username) => {
-    userId = username + Date.now()
-    console.log(userId);
-
-
-    if (halfFullGame) {
-      let players = `${halfFullGame} ${userId}`;
-      halfFullGame = '';
-      games[players] = game.gameStart();
-
-      console.log(games[players])
-
-      socket.emit('boardUpdate', games[players]);
-    } else {
-      halfFullGame = userId;
-    }
+    do {
+      userId = username + Date.now().toString().slice(-7);
+    } while (activeUsers[userId]);
+    console.log(userId + ' connected');
+    activeUsers[userId] = 'waiting';
+    console.log('activeUsers:', activeUsers);
   });
-
 
   socket.on('logout', () => {
-
+    delete activeUsers[userId];
+    console.log('activeUsers:', activeUsers);
   });
 
+  socket.on('disconnect', () => {
+    delete activeUsers[userId];
+    console.log(userId + ' disconnected');
+    console.log('activeUsers:', activeUsers);
+  });
 }
 
 
@@ -72,7 +66,7 @@ function player(socket) {
 // start socket io
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-io.on('connection', player);
+io.on('connection', clientConnection);
 
 server.listen(process.env.PORT || 3000);
 

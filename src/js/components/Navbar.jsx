@@ -7,8 +7,15 @@ class Navbar extends React.Component {
   }
   render() {
     return (
-      <div className="navbar">
-        <div className="button" onClick={this.props.logout}>Log out</div>
+      <div>
+        <div className="logout button" onClick={this.props.logout}>Log out</div>
+        <div className="playerInfo">
+          <h3>You:</h3>
+          {this.props.username}
+          <div className="divider"></div>
+          <h3>Opponent:</h3>
+          {this.props.opponent || '- - -'}
+        </div>
       </div>
     )
   }

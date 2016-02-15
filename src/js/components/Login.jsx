@@ -1,12 +1,16 @@
 import React from 'react';
 
-const MAX_USERNAME_LENGTH = 16;
+const MAX_USERNAME_LENGTH = 12;
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.displayName = 'Login';
-    this.state = { username: '' }
+    this.state = { username: 'nicholas' };
+  }
+
+  componentDidMount() {
+    this.refs.usernameInput.focus();
   }
 
   _join() {
@@ -20,7 +24,7 @@ class Login extends React.Component {
   }
 
   _usernameInput(e) {
-    let newName = e.target.value.replace(/\W/g, '');
+    let newName = e.target.value.replace(/\s/g, '');
     if (newName.length > MAX_USERNAME_LENGTH) return;
     this.setState({ username: newName });
   }
@@ -33,6 +37,7 @@ class Login extends React.Component {
           <p>&bull; &bull; &bull;</p>
           <h2>Please choose a username:</h2>
           <input type="text"
+                 ref="usernameInput"
                  placeholder='e.g. "paul"'
                  value={this.state.username}
                  onKeyPress={this._handleKeyPress.bind(this)}

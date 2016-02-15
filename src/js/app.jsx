@@ -18,9 +18,8 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    socket.on('news', function(data) {
+    socket.on('boardUpdate', function(data) {
       console.log(data);
-      socket.emit('my other event', { my: 'data' });
     });
   }
 
@@ -30,17 +29,16 @@ class App extends React.Component {
 
   _chooseName(username) {
     this.setState({ username: username });
+    socket.emit('login', username);
   }
 
   render() {
-    console.log('this.state.username:', this.state.username)
-
     let navbar   = []
       , main     = <Login chooseName={this._chooseName.bind(this)} />
       , username = this.state.username;
 
     if (username) {
-      navbar = <Navbar logout={this._logout.bind(this)} />;
+      navbar = <Navbar username={this.state.username} logout={this._logout.bind(this)} />;
       main   = <Board myColor={this.state.myColor} />;
     }
 

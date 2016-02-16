@@ -3,29 +3,25 @@ import Square from './Square.jsx';
 import validMoves from '../validMoves.js';
 import '../../css/loadingCube.css';
 
-const backRowPieces = ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'];
-
-// create 8x8 matrix filled with empty strings
-function emptyBoard() {
-  let board = Array(8).fill(undefined);
-  return board.map(row => Array(8).fill(''));
-}
-
 // rotate board 180 degrees
 function rotate(board) {
   return board.map(row => row.reverse()).reverse();
 }
-
 
 class Board extends React.Component {
   constructor(props) {
     super(props);
     this.displayName = 'Board';
     this.state = {
-      board: emptyBoard(),
       validMoves: new Set(),
       selected: [],
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      validMoves: validMoves(nextProps.board, nextProps.myColor)
+    });
   }
 
   _clickSquare(y, x) {
@@ -35,18 +31,18 @@ class Board extends React.Component {
       // if the user clicks one of their own pieces, toggle select it
       if (this.state.selected[0] === y && this.state.selected[1] === x) {
         this.setState({ selected: [] });
-        console.log([])
       } else {
         this.setState({ selected: [y, x] });
-        console.log([y, x])
       }
 
     } else if (this.state.selected.length) {
+      if (!this.props.myTurn) return;
+
       // move to empty square if legal
       let selected = this.state.selected;
 
       let move = `${selected[0]},${selected[1]}->${y},${x}`;
-      if (!validMoves(this.props.board, this.props.myColor).has(move)) return;
+      if (!this.state.validMoves.has(move)) return;
 
       let selectedPiece = this.props.board[selected[0]][selected[1]];
       let newBoard = this.props.board;
@@ -59,8 +55,6 @@ class Board extends React.Component {
   }
 
   render() {
-    let myValidMoves = validMoves(this.props.board, this.props.myColor);
-
     let selected = this.state.selected;
 
     let board = this.props.board.map((row, y) => {
@@ -68,7 +62,7 @@ class Board extends React.Component {
 
         let move = `${selected[0]},${selected[1]}->${y},${x}`;
         let highlight = (y === selected[0] && x === selected[1]) ||
-                        myValidMoves.has(move);
+                        this.state.validMoves.has(move);
 
         return <Square key={y + '' + x}
                        bgColor={(y + x) % 2 === 0 ? "white" : "tan"}

@@ -25,9 +25,8 @@ function game(server) {
       onlineUsers[waitingUser].emit('updateOpponent', userId);
 
       // choose who is black/white
-      onlineUsers[waitingUser].emit('colorAssignment', 'w');
       onlineUsers[userId].emit('colorAssignment', 'b');
-
+      onlineUsers[waitingUser].emit('colorAssignment', 'w');
 
       waitingUser = null;
     } else {
@@ -62,38 +61,22 @@ function game(server) {
     });
 
     socket.on('makeMove', (newBoard) => {
-      onlineUsers[opponent].emit(newBoard);
+      onlineUsers[opponent].emit('boardUpdate', newBoard);
     });
 
     socket.on('logout', () => {
       delete onlineUsers[userId];
       if (waitingUser === userId) waitingUser = null;
-      if (opponent) onlineUsers[opponent].emit('updateOpponent', null);
+      if (onlineUsers[opponent]) onlineUsers[opponent].emit('updateOpponent', null);
       broadcastUsers();
     });
 
     socket.on('disconnect', () => {
       delete onlineUsers[userId];
       if (waitingUser === userId) waitingUser = null;
-      if (opponent) onlineUsers[opponent].emit('updateOpponent', null);
+      if (onlineUsers[opponent]) onlineUsers[opponent].emit('updateOpponent', null);
       broadcastUsers();
     });
-  }
-
-
-  // utility functions
-  const backRowPieces = ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'];
-  function emptyBoard() {
-    let board = Array(8).fill(undefined);
-    return board.map(row => Array(8).fill(''));
-  }
-  function gameStart() {
-    let board = this.emptyBoard();
-    board[0] = backRowPieces.map(piece => 'b' + piece);
-    board[1] = Array(8).fill('bp');
-    board[6] = Array(8).fill('wp');
-    board[7] = backRowPieces.map(piece => 'w' + piece);
-    return board;
   }
 };
 

@@ -7,10 +7,21 @@ import '../css/style.css';
 
 let socket = io.connect('/');
 
+// utility functions
+const backRowPieces = ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'];
 function emptyBoard() {
   let board = Array(8).fill(undefined);
   return board.map(row => Array(8).fill(''));
 }
+function gameStart() {
+  let board = emptyBoard();
+  board[0] = backRowPieces.map(piece => 'b' + piece);
+  board[1] = Array(8).fill('bp');
+  board[6] = Array(8).fill('wp');
+  board[7] = backRowPieces.map(piece => 'w' + piece);
+  return board;
+}
+
 
 class App extends React.Component {
   constructor(props) {
@@ -20,6 +31,7 @@ class App extends React.Component {
       username: '',
       opponent: null,
       myColor: '',
+      myTurn: false,
       board: emptyBoard(),
       onlineUsers: [],
     };
@@ -28,10 +40,7 @@ class App extends React.Component {
   componentDidMount() {
     socket.on('onlineUsers', (data) => this.setState({ onlineUsers: data }));
     socket.on('updateOpponent', this._updateOpponent.bind(this));
-    socket.on('colorAssignment', (data) => {
-      console.log('color:', data);
-      this.setState({ myColor: data })
-    });
+    socket.on('colorAssignment', this._assignColor.bind(this));
     socket.on('boardUpdate', this._updateBoard.bind(this));
   }
 
@@ -45,8 +54,18 @@ class App extends React.Component {
     }
   }
 
+  _assignColor(data) {
+    this.setState({
+      myColor: data,
+      board: gameStart(),
+    });
+    if (data === 'w') {
+      this.setState({ myTurn: true });
+    }
+  }
+
   _updateBoard(data) {
-    this.setState({ board: data });
+    this.setState({ board: data, myTurn: true });
   }
 
   _logout() {
@@ -60,8 +79,13 @@ class App extends React.Component {
   }
 
   _makeMove(newBoard) {
-    this.setState({ board: newBoard });
-    socket.emit('makeMove', newBoard);
+    console.log('myTurn?', this.state.myTurn);
+
+    if (this.state.myTurn) {
+      console.log('myTurn?', this.state.myTurn);
+      this.setState({ board: newBoard, myTurn: false });
+      socket.emit('makeMove', newBoard);
+    }
   }
 
   render() {
@@ -76,6 +100,7 @@ class App extends React.Component {
                        onlineUsers={this.state.onlineUsers}
                        logout={this._logout.bind(this)} />;
       main   = <Board myColor={this.state.myColor}
+                      myTurn={this.state.myTurn}
                       board={this.state.board}
                       opponent={this.state.opponent}
                       makeMove={this._makeMove.bind(this)}

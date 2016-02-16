@@ -10,6 +10,9 @@ class Navbar extends React.Component {
   render() {
     let opponent = this.props.opponent ? this.props.opponent.split(' ')[0] : '- - -';
 
+    let myColor = this.props.myColor ? `(${this.props.myColor})` : '';
+    let oppColor = (this.props.myColor === 'w') ? '(b)' : (this.props.myColor ? '(w)' : '');
+
     let users = this.props.onlineUsers.map((user, i) => {
       return <em key={i}>{user}</em>
     });
@@ -19,10 +22,10 @@ class Navbar extends React.Component {
         <div className="logout button" onClick={this.props.logout}>Log out</div>
         <div className="playerInfo">
           <h3>You:</h3>
-          {this.props.username}
+          <span>{this.props.username} {myColor}</span>
           <div className="divider"></div>
           <h3>Opponent:</h3>
-          {opponent}
+          <span>{opponent} {oppColor}</span>
         </div>
         <div className="onlineUsers">
           <p>Users:</p>

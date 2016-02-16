@@ -19,7 +19,7 @@ class App extends React.Component {
     this.state = {
       username: '',
       opponent: null,
-      myColor: 'w',
+      myColor: '',
       board: emptyBoard(),
       onlineUsers: [],
     };
@@ -28,6 +28,10 @@ class App extends React.Component {
   componentDidMount() {
     socket.on('onlineUsers', (data) => this.setState({ onlineUsers: data }));
     socket.on('updateOpponent', this._updateOpponent.bind(this));
+    socket.on('colorAssignment', (data) => {
+      console.log('color:', data);
+      this.setState({ myColor: data })
+    });
     socket.on('boardUpdate', this._updateBoard.bind(this));
   }
 
@@ -37,6 +41,7 @@ class App extends React.Component {
       socket.emit('hazOpponent', data);
     } else {
       socket.emit('noHazOpponent');
+      this.setState({ myColor: '' });
     }
   }
 
@@ -65,7 +70,8 @@ class App extends React.Component {
       , username = this.state.username;
 
     if (username) {
-      navbar = <Navbar username={this.state.username}
+      navbar = <Navbar myColor={this.state.myColor}
+                       username={this.state.username}
                        opponent={this.state.opponent}
                        onlineUsers={this.state.onlineUsers}
                        logout={this._logout.bind(this)} />;

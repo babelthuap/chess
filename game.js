@@ -17,17 +17,16 @@ function game(server) {
   }
 
 
+  // match players and start a game
   function lookForGame(userId) {
     if (waitingUser) {
-      // start game!
       // tell each player who their opponent is
       onlineUsers[userId].emit('updateOpponent', waitingUser);
       onlineUsers[waitingUser].emit('updateOpponent', userId);
 
       // choose who is black/white
-      let coin = Math.floor(Math.random() * 2);
-      onlineUsers[userId].emit('colorAssignment', coin ? 'w' : 'b');
-      onlineUsers[waitingUser].emit('colorAssignment', coin ? 'b' : 'w');
+      onlineUsers[waitingUser].emit('colorAssignment', 'w');
+      onlineUsers[userId].emit('colorAssignment', 'b');
 
 
       waitingUser = null;

@@ -57,23 +57,18 @@ function clientConnection(socket) {
     do {
       userId = username + ' ' + Math.floor(Math.random() * 1000000);
     } while (onlineUsers.hasOwnProperty(userId));
-    console.log(userId + ' connected');
-    onlineUsers[userId] = 'waiting';
+    onlineUsers[userId] = socket;
     broadcastUsers();
-    console.log('onlineUsers:', onlineUsers);
   });
 
   socket.on('logout', () => {
     delete onlineUsers[userId];
     broadcastUsers();
-    console.log('onlineUsers:', onlineUsers);
   });
 
   socket.on('disconnect', () => {
     delete onlineUsers[userId];
     broadcastUsers();
-    console.log(userId + ' disconnected');
-    console.log('onlineUsers:', onlineUsers);
   });
 }
 

@@ -11,16 +11,6 @@ function emptyBoard() {
   return board.map(row => Array(8).fill(''));
 }
 
-// create a "new game" board
-function gameStart() {
-  let board = emptyBoard();
-  board[0] = backRowPieces.map(piece => 'b' + piece);
-  board[1] = Array(8).fill('bp');
-  board[6] = Array(8).fill('wp');
-  board[7] = backRowPieces.map(piece => 'w' + piece);
-  return board;
-}
-
 // rotate board 180 degrees
 function rotate(board) {
   return board.map(row => row.reverse()).reverse();
@@ -33,9 +23,9 @@ class Board extends React.Component {
     this.displayName = 'Board';
     this.state = {
       board: emptyBoard(),
-      validMoves: validMoves(gameStart(), this.props.myColor),
+      validMoves: new Set(),
       selected: [],
-      waiting: false,
+      waiting: false, // set to true to enable loading spinner!!!
     }
   }
 

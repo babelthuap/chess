@@ -14,20 +14,21 @@ class App extends React.Component {
     this.state = {
       username: '',
       myColor: 'w',
+      board: [],
       onlineUsers: [],
     };
   }
 
   componentDidMount() {
-    socket.on('boardUpdate', function(data) {
-      console.log(data);
-    });
-
+    socket.on('boardUpdate', this._updateBoard.bind(this));
     socket.on('onlineUsers', this._updateUsers.bind(this));
   }
 
+  _updateBoard(data) {
+    this.setState({ board: data });
+  }
+
   _updateUsers(data) {
-    console.log('users:', data);
     this.setState({ onlineUsers: data });
   }
 
@@ -50,7 +51,9 @@ class App extends React.Component {
       navbar = <Navbar username={this.state.username}
                        onlineUsers={this.state.onlineUsers}
                        logout={this._logout.bind(this)} />;
-      main   = <Board myColor={this.state.myColor} />;
+      main   = <Board myColor={this.state.myColor}
+                      board={this.state.board}
+                      updateBoard={this._updateBoard.bind(this)} />;
     }
 
     return (

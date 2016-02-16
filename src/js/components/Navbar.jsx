@@ -8,6 +8,8 @@ class Navbar extends React.Component {
   }
 
   render() {
+    let opponent = this.props.opponent ? this.props.opponent.split(' ')[0] : '- - -';
+
     let users = this.props.onlineUsers.map((user, i) => {
       return <em key={i}>{user}</em>
     });
@@ -20,7 +22,7 @@ class Navbar extends React.Component {
           {this.props.username}
           <div className="divider"></div>
           <h3>Opponent:</h3>
-          {this.props.opponent || '- - -'}
+          {opponent}
         </div>
         <div className="onlineUsers">
           <p>Users:</p>

@@ -25,7 +25,6 @@ class Board extends React.Component {
       board: emptyBoard(),
       validMoves: new Set(),
       selected: [],
-      waiting: false, // set to true to enable loading spinner!!!
     }
   }
 
@@ -80,7 +79,7 @@ class Board extends React.Component {
     });
 
     let waitingMessage = [];
-    if (this.state.waiting) {
+    if (!this.props.opponent) {
       waitingMessage = (
         <h1 id="waitingMessage">
           Waiting<br/>for<br/>opponent...

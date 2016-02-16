@@ -27,11 +27,17 @@ class App extends React.Component {
 
   componentDidMount() {
     socket.on('onlineUsers', (data) => this.setState({ onlineUsers: data }));
-    socket.on('newOpponent', (data) => {
-      console.log(data);
-      this.setState({ opponent: data })
-    });
+    socket.on('updateOpponent', this._updateOpponent.bind(this));
     socket.on('boardUpdate', this._updateBoard.bind(this));
+  }
+
+  _updateOpponent(data) {
+    this.setState({ opponent: data });
+    if (data) {
+      socket.emit('hazOpponent', data);
+    } else {
+      socket.emit('noHazOpponent');
+    }
   }
 
   _updateBoard(data) {
@@ -60,10 +66,12 @@ class App extends React.Component {
 
     if (username) {
       navbar = <Navbar username={this.state.username}
+                       opponent={this.state.opponent}
                        onlineUsers={this.state.onlineUsers}
                        logout={this._logout.bind(this)} />;
       main   = <Board myColor={this.state.myColor}
                       board={this.state.board}
+                      opponent={this.state.opponent}
                       makeMove={this._makeMove.bind(this)}
                       updateBoard={this._updateBoard.bind(this)} />;
     }

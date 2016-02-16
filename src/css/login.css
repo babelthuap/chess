@@ -10,6 +10,22 @@
   position: relative;
 }
 
+.login img {
+  position: absolute;
+  top: 0%;
+  width: 100px;
+}
+
+.login img:nth-of-type(1) {
+  transform: rotateZ(-30deg);
+  left: 0%;
+}
+
+.login img:nth-of-type(2) {
+  transform: rotateZ(30deg);
+  right: 0%;
+}
+
 .login > div {
   width: 100%;
   position: absolute;

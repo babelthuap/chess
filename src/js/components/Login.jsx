@@ -34,6 +34,8 @@ class Login extends React.Component {
     return (
       <div className="login">
         <div>
+          <img src="pieces/bk.svg"/>
+          <img src="pieces/wk.svg"/>
           <h1>Welcome!</h1>
           <p>&bull; &bull; &bull;</p>
           <h2>Please choose a username:</h2>

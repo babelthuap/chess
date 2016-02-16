@@ -1,0 +1,26 @@
+.login {
+  margin: auto;
+  border-radius: 15px;
+  color: #333;
+  background-color: tan;
+  box-shadow: 10px 10px 5px #888888;
+  border: 20px solid #589442;
+  width: 475px;
+  height: 250px;
+  position: relative;
+}
+
+.login > div {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login input {
+  font-family: Optima, sans-serif;
+  font-size: 16px;
+  padding: 4px;
+  margin: 0.5em;
+}

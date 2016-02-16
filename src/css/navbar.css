@@ -30,24 +30,3 @@
   width: 100%;
   margin: 1em 0em 1em 0em;
 }
-
-.onlineUsers {
-  position: fixed;
-  opacity: 0.75;
-  top: 100px;
-  left: 0px;
-  color: white;
-  background-color: #589442;
-  padding: 0.5em;
-  padding-bottom: 1em;
-  margin: 0.5em;
-  border: 6px solid #888888;
-}
-
-.onlineUsers > p:first-child {
-  font-weight: bold;
-}
-
-.onlineUsers em {
-  display: block;
-}

@@ -46,8 +46,7 @@ function game(server) {
         userId = username + ' ' + Math.floor(Math.random() * 1000000);
       } while (onlineUsers.hasOwnProperty(userId));
       onlineUsers[userId] = socket;
-      broadcastUsers();
-      // socket.emit('boardUpdate', game.gameStart());
+      // broadcastUsers();
       lookForGame(userId);
     });
 
@@ -68,14 +67,14 @@ function game(server) {
       delete onlineUsers[userId];
       if (waitingUser === userId) waitingUser = null;
       if (onlineUsers[opponent]) onlineUsers[opponent].emit('updateOpponent', null);
-      broadcastUsers();
+      // broadcastUsers();
     });
 
     socket.on('disconnect', () => {
       delete onlineUsers[userId];
       if (waitingUser === userId) waitingUser = null;
       if (onlineUsers[opponent]) onlineUsers[opponent].emit('updateOpponent', null);
-      broadcastUsers();
+      // broadcastUsers();
     });
   }
 };

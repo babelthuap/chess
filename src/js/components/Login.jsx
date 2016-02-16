@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../css/login.css';
 
 const MAX_USERNAME_LENGTH = 12;
 

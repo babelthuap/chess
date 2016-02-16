@@ -13,10 +13,6 @@ class Navbar extends React.Component {
     let myColor = this.props.myColor ? `(${this.props.myColor})` : '';
     let oppColor = (this.props.myColor === 'w') ? '(b)' : (this.props.myColor ? '(w)' : '');
 
-    let users = this.props.onlineUsers.map((user, i) => {
-      return <em key={i}>{user}</em>
-    });
-
     return (
       <div>
         <div className="logout button" onClick={this.props.logout}>Log out</div>
@@ -26,10 +22,6 @@ class Navbar extends React.Component {
           <div className="divider"></div>
           <h3>Opponent:</h3>
           <span>{opponent} {oppColor}</span>
-        </div>
-        <div className="onlineUsers">
-          <p>Users:</p>
-          {users}
         </div>
       </div>
     )

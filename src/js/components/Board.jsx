@@ -1,6 +1,7 @@
 import React from 'react';
 import Square from './Square.jsx';
 import validMoves from '../validMoves.js';
+import '../../css/board.css';
 import '../../css/loadingCube.css';
 
 class Board extends React.Component {

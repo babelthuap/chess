@@ -35,12 +35,10 @@ class App extends React.Component {
       myColor: '',
       myTurn: false,
       board: emptyBoard(),
-      onlineUsers: [],
     };
   }
 
   componentDidMount() {
-    socket.on('onlineUsers', (data) => this.setState({ onlineUsers: data }));
     socket.on('updateOpponent', this._updateOpponent.bind(this));
     socket.on('colorAssignment', this._assignColor.bind(this));
     socket.on('boardUpdate', this._updateBoard.bind(this));
@@ -99,7 +97,6 @@ class App extends React.Component {
       navbar = <Navbar myColor={this.state.myColor}
                        username={this.state.username}
                        opponent={this.state.opponent}
-                       onlineUsers={this.state.onlineUsers}
                        logout={this._logout.bind(this)} />;
       let board = this.state.myColor === 'b' ? rotate(this.state.board) : this.state.board;
       main   = <Board myColor={this.state.myColor}

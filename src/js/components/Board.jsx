@@ -30,14 +30,19 @@ class Board extends React.Component {
   }
 
   _clickSquare(y, x) {
-    let piece = this.state.board[y][x];
+
+    console.log('clicked', y, x)
+
+    let piece = this.props.board[y][x];
 
     if (piece && piece[0] === this.props.myColor) {
       // if the user clicks one of their own pieces, toggle select it
       if (this.state.selected[0] === y && this.state.selected[1] === x) {
         this.setState({ selected: [] });
+        console.log([])
       } else {
         this.setState({ selected: [y, x] });
+        console.log([y, x])
       }
 
     } else if (this.state.selected.length) {
@@ -45,34 +50,33 @@ class Board extends React.Component {
       let selected = this.state.selected;
 
       let move = `${selected[0]},${selected[1]}->${y},${x}`;
-      if (!this.state.validMoves.has(move)) return;
+      if (!validMoves(this.props.board, this.props.myColor).has(move)) return;
 
-      let selectedPiece = this.state.board[selected[0]][selected[1]];
-      let newBoard = this.state.board;
+      let selectedPiece = this.props.board[selected[0]][selected[1]];
+      let newBoard = this.props.board;
       newBoard[selected[0]][selected[1]] = '';
       newBoard[y][x] = selectedPiece;
 
-      this.setState({
-        board: newBoard,
-        validMoves: validMoves(newBoard, this.props.myColor),
-        selected: [],
-      });
+      this.props.makeMove(newBoard);
+      this.setState({ selected: [] });
     }
   }
 
   render() {
+    let myValidMoves = validMoves(this.props.board, this.props.myColor);
+
     let selected = this.state.selected;
 
-    let board = this.state.board.map((row, y) => {
+    let board = this.props.board.map((row, y) => {
       return row.map((piece, x) => {
 
         let move = `${selected[0]},${selected[1]}->${y},${x}`;
         let highlight = (y === selected[0] && x === selected[1]) ||
-                        this.state.validMoves.has(move);
+                        myValidMoves.has(move);
 
         return <Square key={y + '' + x}
                        bgColor={(y + x) % 2 === 0 ? "white" : "tan"}
-                       selected={highlight}
+                       highlight={highlight}
                        click={this._clickSquare.bind(this, y, x)}
                        piece={piece} />
       });

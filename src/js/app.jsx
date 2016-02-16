@@ -7,6 +7,11 @@ import '../css/style.css';
 
 let socket = io.connect('/');
 
+function emptyBoard() {
+  let board = Array(8).fill(undefined);
+  return board.map(row => Array(8).fill(''));
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +19,7 @@ class App extends React.Component {
     this.state = {
       username: '',
       myColor: 'w',
-      board: [],
+      board: emptyBoard(),
       onlineUsers: [],
     };
   }
@@ -42,6 +47,10 @@ class App extends React.Component {
     socket.emit('login', username);
   }
 
+  _makeMove(newBoard) {
+    this.setState({ board: newBoard });
+  }
+
   render() {
     let navbar   = []
       , main     = <Login chooseName={this._chooseName.bind(this)} />
@@ -53,6 +62,7 @@ class App extends React.Component {
                        logout={this._logout.bind(this)} />;
       main   = <Board myColor={this.state.myColor}
                       board={this.state.board}
+                      makeMove={this._makeMove.bind(this)}
                       updateBoard={this._updateBoard.bind(this)} />;
     }
 

@@ -10,7 +10,7 @@ class Square extends React.Component {
     let piece = this.props.piece;
     let img = piece ? <img src={`pieces/${piece}.svg`} width="64" alt={piece}/> : [];
     return (
-      <div className={`${this.props.bgColor} square${this.props.selected ? " selected" : ""}`}
+      <div className={`${this.props.bgColor} square${this.props.highlight ? " highlight" : ""}`}
            onClick={this.props.click}>
         <span className="piece">
           {img}

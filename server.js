@@ -59,6 +59,8 @@ function clientConnection(socket) {
     } while (onlineUsers.hasOwnProperty(userId));
     onlineUsers[userId] = socket;
     broadcastUsers();
+
+    socket.emit('boardUpdate', game.gameStart());
   });
 
   socket.on('logout', () => {

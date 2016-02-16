@@ -3,11 +3,6 @@ import Square from './Square.jsx';
 import validMoves from '../validMoves.js';
 import '../../css/loadingCube.css';
 
-// rotate board 180 degrees
-function rotate(board) {
-  return board.map(row => row.reverse()).reverse();
-}
-
 class Board extends React.Component {
   constructor(props) {
     super(props);
@@ -36,9 +31,10 @@ class Board extends React.Component {
       }
 
     } else if (this.state.selected.length) {
+      // make move if legal
+
       if (!this.props.myTurn) return;
 
-      // move to empty square if legal
       let selected = this.state.selected;
 
       let move = `${selected[0]},${selected[1]}->${y},${x}`;
@@ -59,11 +55,9 @@ class Board extends React.Component {
 
     let board = this.props.board.map((row, y) => {
       return row.map((piece, x) => {
-
         let move = `${selected[0]},${selected[1]}->${y},${x}`;
         let highlight = (y === selected[0] && x === selected[1]) ||
                         this.state.validMoves.has(move);
-
         return <Square key={y + '' + x}
                        bgColor={(y + x) % 2 === 0 ? "white" : "tan"}
                        highlight={highlight}

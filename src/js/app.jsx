@@ -21,7 +21,9 @@ function gameStart() {
   board[7] = backRowPieces.map(piece => 'w' + piece);
   return board;
 }
-
+function rotate(board) {
+  return board.map(row => row.reverse()).reverse();
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -79,10 +81,10 @@ class App extends React.Component {
   }
 
   _makeMove(newBoard) {
-    console.log('myTurn?', this.state.myTurn);
-
     if (this.state.myTurn) {
-      console.log('myTurn?', this.state.myTurn);
+      if (this.state.myColor === 'b') {
+        newBoard = rotate(newBoard);
+      }
       this.setState({ board: newBoard, myTurn: false });
       socket.emit('makeMove', newBoard);
     }
@@ -99,9 +101,10 @@ class App extends React.Component {
                        opponent={this.state.opponent}
                        onlineUsers={this.state.onlineUsers}
                        logout={this._logout.bind(this)} />;
+      let board = this.state.myColor === 'b' ? rotate(this.state.board) : this.state.board;
       main   = <Board myColor={this.state.myColor}
                       myTurn={this.state.myTurn}
-                      board={this.state.board}
+                      board={board}
                       opponent={this.state.opponent}
                       makeMove={this._makeMove.bind(this)}
                       updateBoard={this._updateBoard.bind(this)} />;

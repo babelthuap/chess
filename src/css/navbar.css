@@ -33,6 +33,7 @@
 
 .onlineUsers {
   position: fixed;
+  opacity: 0.75;
   top: 100px;
   left: 0px;
   color: white;

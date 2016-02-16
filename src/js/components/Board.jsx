@@ -30,9 +30,6 @@ class Board extends React.Component {
   }
 
   _clickSquare(y, x) {
-
-    console.log('clicked', y, x)
-
     let piece = this.props.board[y][x];
 
     if (piece && piece[0] === this.props.myColor) {

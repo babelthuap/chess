@@ -18,6 +18,7 @@ class App extends React.Component {
     this.displayName = 'App';
     this.state = {
       username: '',
+      opponent: null,
       myColor: 'w',
       board: emptyBoard(),
       onlineUsers: [],
@@ -25,16 +26,16 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    socket.on('onlineUsers', (data) => this.setState({ onlineUsers: data }));
+    socket.on('newOpponent', (data) => {
+      console.log(data);
+      this.setState({ opponent: data })
+    });
     socket.on('boardUpdate', this._updateBoard.bind(this));
-    socket.on('onlineUsers', this._updateUsers.bind(this));
   }
 
   _updateBoard(data) {
     this.setState({ board: data });
-  }
-
-  _updateUsers(data) {
-    this.setState({ onlineUsers: data });
   }
 
   _logout() {
@@ -49,6 +50,7 @@ class App extends React.Component {
 
   _makeMove(newBoard) {
     this.setState({ board: newBoard });
+    socket.emit('makeMove', newBoard);
   }
 
   render() {

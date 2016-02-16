@@ -31,14 +31,14 @@ app.use('/', require('./routes/index'));
 
 
 // start socket io
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+let server = require('http').Server(app);
+let io = require('socket.io')(server);
 io.on('connection', clientConnection);
 
 
 // game logic
-let games = {};
 let onlineUsers = {};
+let waitingUser = null;
 
 
 function broadcastUsers() {
@@ -49,9 +49,31 @@ function broadcastUsers() {
 }
 
 
+function lookForGame(userId) {
+  if (waitingUser) {
+    // start game!
+    // tell each player who their opponent is
+    onlineUsers[userId].emit('newOpponent', waitingUser);
+    onlineUsers[waitingUser].emit('newOpponent', userId);
+
+    // choose who is black/white
+    let coinToss = Math.floor(Math.random() * 2);
+    if (coinToss === 1) {
+
+    }
+
+    waitingUser = null;
+  } else {
+    waitingUser = userId;
+  }
+  console.log('waitingUser:', waitingUser);
+}
+
+
 // handle a client connection
 function clientConnection(socket) {
-  let userId;
+  let userId
+    , opponent;
 
   socket.on('login', (username) => {
     do {
@@ -60,16 +82,24 @@ function clientConnection(socket) {
     onlineUsers[userId] = socket;
     broadcastUsers();
 
-    socket.emit('boardUpdate', game.gameStart());
+    // socket.emit('boardUpdate', game.gameStart());
+
+    lookForGame(userId);
+  });
+
+  socket.on('makeMove', (newBoard) => {
+    onlineUsers[opponent].emit(newBoard);
   });
 
   socket.on('logout', () => {
     delete onlineUsers[userId];
+    if (waitingUser === userId) waitingUser = null;
     broadcastUsers();
   });
 
   socket.on('disconnect', () => {
     delete onlineUsers[userId];
+    if (waitingUser === userId) waitingUser = null;
     broadcastUsers();
   });
 }

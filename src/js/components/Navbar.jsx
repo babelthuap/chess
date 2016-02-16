@@ -10,18 +10,23 @@ class Navbar extends React.Component {
   render() {
     let opponent = this.props.opponent ? this.props.opponent.split(' ')[0] : '- - -';
 
-    let myColor = this.props.myColor ? `(${this.props.myColor})` : '';
-    let oppColor = (this.props.myColor === 'w') ? '(b)' : (this.props.myColor ? '(w)' : '');
-
     return (
       <div>
         <div className="logout button" onClick={this.props.logout}>Log out</div>
         <div className="playerInfo">
-          <h3>You:</h3>
-          <span>{this.props.username} {myColor}</span>
+          <div className={this.props.myColor}>
+            <h3>You:</h3>
+            <span className={(this.props.myTurn && this.props.myColor) ? ' currentTurn' : ''}>
+              {this.props.username}
+            </span>
+          </div>
           <div className="divider"></div>
-          <h3>Opponent:</h3>
-          <span>{opponent} {oppColor}</span>
+          <div className={this.props.myColor === 'w' ? 'b' : 'w'}>
+            <h3>Opponent:</h3>
+            <span className={this.props.myTurn ? '' : (this.props.myColor && ' currentTurn')}>
+              {opponent}
+            </span>
+          </div>
         </div>
       </div>
     )

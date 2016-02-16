@@ -21,7 +21,21 @@
 }
 
 .playerInfo h3 {
-  margin-bottom: 4px;
+  margin-bottom: 7px;
+}
+
+.playerInfo .w {
+  color: white;
+}
+
+.playerInfo .b {
+  color: black;
+}
+
+.playerInfo .currentTurn {
+  background-color: #FD7979;
+  padding: 6px;
+  border-radius: 3px;
 }
 
 .playerInfo .divider {

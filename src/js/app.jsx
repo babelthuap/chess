@@ -61,6 +61,8 @@ class App extends React.Component {
     });
     if (data === 'w') {
       this.setState({ myTurn: true });
+    } else {
+      this.setState({ myTurn: false });
     }
   }
 
@@ -95,6 +97,7 @@ class App extends React.Component {
 
     if (username) {
       navbar = <Navbar myColor={this.state.myColor}
+                       myTurn={this.state.myTurn}
                        username={this.state.username}
                        opponent={this.state.opponent}
                        logout={this._logout.bind(this)} />;
